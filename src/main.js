@@ -2,6 +2,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+
+
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI)
+
 // 配置vue框架的日志级别 productionTip
 // false 不是生产环境级别日志，开发环境日志，日志详细
 // true 生产环境级别日志，上线之后部署服务器后，日志简单
