@@ -2,11 +2,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+// import router from './router/index.js'
+// 同上
+import router from '@/router'
 
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+// 使用element-ui
 Vue.use(ElementUI)
 
 // 配置vue框架的日志级别 productionTip
@@ -16,9 +19,10 @@ Vue.config.productionTip = false
 
 // 根实例
 // 使用App.vue注释渲染到#APP容器中
-// (components公用级别组件)(views级别的组件)
+// (componts公用级别组件)(views级别的组件)
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  router
 }).$mount('#app')
 
 // main.js的职责
