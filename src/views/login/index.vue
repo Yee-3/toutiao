@@ -5,7 +5,7 @@
     <el-card class="my-card">
       <img src="../../assets/logo_index.png" alt />
       <!-- 表单 -->
-      <el-form ref="loginFrom" :model="loginForm" :rules="loginRules" status-icon>
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" status-icon>
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
@@ -61,9 +61,8 @@ export default {
   },
   methods: {
     login() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-        
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {     
         }
       });
     }
