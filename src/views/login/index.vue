@@ -63,6 +63,15 @@ export default {
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {     
+          this.$http.post(
+            'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+            this.loginForm
+          ).then(res=>{
+            this.$router.push('/')
+          }).catch(()=>{
+            // 提示：错误信息
+            this.$message.Error('手机或验证码错误')
+          })
         }
       });
     }
