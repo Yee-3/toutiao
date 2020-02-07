@@ -3,8 +3,23 @@
   <el-container class="container-home">
     <el-aside class="my-aside" width="200px">Aside</el-aside>
     <el-container>
-    <el-header class="my-header">Header</el-header>
-    <el-main>Main</el-main>
+      <el-header class="my-header">
+        <span class="icon el-icon-s-fold"></span>
+        <span class="text">江苏传智播客科技教育有限公司</span>
+        <!-- 下拉菜单 -->
+        <el-dropdown class="my-dropdown">
+          <span class="el-dropdown-link">
+            <img class="head" src="../../assets/avatar.jpg" alt />
+            <strong class="name">周杰伦</strong>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人设置</el-dropdown-item>
+            <el-dropdown-item>退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-header>
+      <el-main>Main</el-main>
     </el-container>
   </el-container>
 </template>
@@ -22,13 +37,34 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  background: red;
+  // background: red;
 }
 .my-aside {
-  background: greenyellow;
+  background: #002233;
 }
 .my-header {
   // background: #fff;
   border-bottom: 1px solid #dddddd;
+  line-height: 60px;
+  .icon {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  .text {
+    vertical-align: middle;
+    padding-left: 10px;
+  }
+  .my-dropdown {
+    float: right;
+    .head {
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+    }
+    .name {
+      padding-left: 5px;
+      vertical-align: middle;
+    }
+  }
 }
 </style>>
