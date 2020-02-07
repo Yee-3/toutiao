@@ -9,8 +9,13 @@ import router from '@/router'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// 导入axios
+import axios from 'axios'
 // 使用element-ui
 Vue.use(ElementUI)
+
+// 挂载$http 对象axios
+Vue.prototype.$http = axios
 
 // 配置vue框架的日志级别 productionTip
 // false 不是生产环境级别日志，开发环境日志，日志详细
