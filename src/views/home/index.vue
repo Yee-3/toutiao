@@ -1,15 +1,18 @@
 <template>
   <!-- <div class="container-home">Home</div> -->
   <el-container class="container-home">
-    <el-aside class="my-aside" width="200px">
-      <div class="logo"></div>
+    <el-aside class="my-aside" :width="isOpen?'200px':'64px'">
+      <div class="logo" :class="{minLogo:!isOpen}"></div>
+      
       <el-menu
         default-active="1"
         background-color="#002233"
         text-color="#fff"
         active-text-color="#ffd04b"
         style="border-right:none"
-        >
+        :collapse="!isOpen"
+        :collapse-transition="false"
+      >
         <el-menu-item index="1">
           <i class="el-icon-s-home"></i>
           <span slot="title">首页</span>
@@ -48,7 +51,7 @@
     </el-aside>
     <el-container>
       <el-header class="my-header">
-        <span class="icon el-icon-s-fold"></span>
+        <span @click="toggleMenu()" class="icon el-icon-s-fold"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
         <!-- 下拉菜单 -->
         <el-dropdown class="my-dropdown">
@@ -72,7 +75,19 @@
 
 <script>
 export default {
-  name: "app-home"
+  name: "app-home",
+  data() {
+    return {
+      isOpen: true
+    };
+  },
+  methods: {
+    toggleMenu() {
+      // console.log(1);
+      // this.isOpen=true
+      this.isOpen = !this.isOpen;
+    }
+  }
 };
 </script>
 
@@ -91,6 +106,10 @@ export default {
     width: 100%;
     height: 60px;
     background: url(../../assets/logo_admin.png) no-repeat center / 140px auto;
+  }
+  .minLogo {
+    background-image: url(../../assets/logo_admin_01.png);
+    background-size: 36px auto;
   }
 }
 .my-header {
