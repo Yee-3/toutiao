@@ -1,5 +1,4 @@
 <template>
-  <!-- <div id="container">Login</div> -->
   <!-- <div class="container">Login</div> -->
   <!-- 全屏容器 -->
   <div class="container-login">
