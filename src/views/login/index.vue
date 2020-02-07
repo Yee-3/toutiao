@@ -1,7 +1,5 @@
 <template>
-<<<<<<< HEAD
-  <div id="container">Login</div>
-=======
+  <!-- <div id="container">Login</div> -->
   <!-- <div class="container">Login</div> -->
   <!-- 全屏容器 -->
   <div class="container-login">
@@ -29,20 +27,10 @@
       </el-form>
     </el-card>
   </div>
->>>>>>> login
 </template>
 
 <script>
 export default {
-<<<<<<< HEAD
-  name: 'app-login',
-  
-}
-</script>
-
-<style lang="less">
-
-=======
   name: "app-login",
   data() {
     const checkMobile = (rule, value, callback) => {
@@ -115,5 +103,4 @@ export default {
     }
   }
 }
->>>>>>> login
 </style>
