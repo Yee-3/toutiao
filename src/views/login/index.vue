@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import auth from '@/utils/auth'
 export default {
   name: "app-login",
   data() {
@@ -68,6 +69,8 @@ export default {
             'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
             this.loginForm
           ).then(res=>{
+            // 响应报文对象（响应状态行，响应头，相应主体，res.data）
+            auth.setUser(res.data.data)
             this.$router.push('/')
           }).catch(()=>{
             // 提示：错误信息
