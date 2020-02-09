@@ -46,8 +46,8 @@ export default {
     return {
       //  表单对应的数据对象
       loginForm: {
-        mobile: "13911111111",
-        code: "246810"
+        mobile: "",
+        code: ""
       },
       loginRules: {
         mobile: [
