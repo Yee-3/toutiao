@@ -3,7 +3,7 @@
   <el-container class="container-home">
     <el-aside class="my-aside" :width="isOpen?'200px':'64px'">
       <div class="logo" :class="{minLogo:!isOpen}"></div>
-      
+
       <el-menu
         default-active="1"
         background-color="#002233"
@@ -56,8 +56,8 @@
         <!-- 下拉菜单 -->
         <el-dropdown class="my-dropdown">
           <span class="el-dropdown-link">
-            <img class="head" src="../../assets/avatar.jpg" alt />
-            <strong class="name">周杰伦</strong>
+            <img class="head" :src="photo" alt />
+            <strong class="name">{{name}}</strong>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -74,12 +74,21 @@
 </template>
 
 <script>
+import auth from "@/utils/auth";
 export default {
   name: "app-home",
   data() {
     return {
-      isOpen: true
+      isOpen: true,
+      name: '',
+      photo: ''
     };
+  },
+  created() {
+    // 获取用户信息，给name photo赋值
+    const user = auth.getUser();
+    this.name = user.name;
+    this.photo = user.photo;
   },
   methods: {
     toggleMenu() {
