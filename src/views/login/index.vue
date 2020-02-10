@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import auth from '@/utils/auth'
+import auth from "@/utils/auth";
 export default {
   name: "app-login",
   data() {
@@ -63,19 +63,23 @@ export default {
   },
   methods: {
     login() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {     
-          this.$http.post(
-            'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
-            this.loginForm
-          ).then(res=>{
-            // 响应报文对象（响应状态行，响应头，相应主体，res.data）
-            auth.setUser(res.data.data)
-            this.$router.push('/')
-          }).catch(()=>{
+      this.$refs.loginForm.validate(async valid => {
+        if (valid) {
+          // this.$http.post(
+          //   'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+          //   this.loginForm
+          // ).then(res=>{
+          //   // 响应报文对象（响应状态行，响应头，相应主体，res.data）
+          try {
+            const res = await this.$http.post("authorizations", this.loginForm);
+            auth.setUser(res.data.data);
+            this.$router.push("/");
+          } catch (e) {
             // 提示：错误信息
-            this.$message.Error('手机或验证码错误')
-          })
+            this.$message.Error("手机或验证码错误");
+          }
+          // }).catch(()=>{
+          // })
         }
       });
     }
