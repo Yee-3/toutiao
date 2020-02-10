@@ -1,12 +1,6 @@
 <template>
   <!-- <div class="container-home">Home</div> -->
   <el-container class="container-home">
-<<<<<<< HEAD
-    <el-aside class="my-aside" width="200px">Aside</el-aside>
-    <el-container>
-    <el-header class="my-header">Header</el-header>
-    <el-main>Main</el-main>
-=======
     <el-aside class="my-aside" :width="isOpen?'200px':'64px'">
       <div class="logo" :class="{minLogo:!isOpen}"></div>
 
@@ -75,16 +69,11 @@
       <el-main>
         <router-view></router-view>
       </el-main>
->>>>>>> home
     </el-container>
   </el-container>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-  name: "app-home"
-=======
 import auth from "@/utils/auth";
 export default {
   name: "app-home",
@@ -117,7 +106,6 @@ export default {
       }
     }
   }
->>>>>>> home
 };
 </script>
 
@@ -128,12 +116,6 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-<<<<<<< HEAD
-  background: red;
-}
-.my-aside {
-  background: greenyellow;
-=======
   // background: red;
 }
 .my-aside {
@@ -147,15 +129,10 @@ export default {
     background-image: url(../../assets/logo_admin_01.png);
     background-size: 36px auto;
   }
->>>>>>> home
 }
 .my-header {
   // background: #fff;
   border-bottom: 1px solid #dddddd;
-<<<<<<< HEAD
-}
-</style>>
-=======
   line-height: 60px;
   .icon {
     font-size: 24px;
@@ -179,4 +156,3 @@ export default {
   }
 }
 </style>
->>>>>>> home
