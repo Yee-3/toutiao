@@ -6,7 +6,16 @@
 
 <script>
 export default {
-  name:"app-article"
+  name:"app-article",
+  created(){
+    this.$http.get('http://ttapi.research.itcast.cn/mp/v1_0/articles').then(res=>{
+      console.log(res.data);
+      
+    }).catch(err=>{
+      console.log(err);
+      
+    })
+  }
 }
 </script>
 
