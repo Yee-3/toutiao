@@ -1,8 +1,5 @@
 <template>
-<<<<<<< HEAD
-=======
   <!-- <div id="container">Login</div> -->
->>>>>>> home
   <!-- <div class="container">Login</div> -->
   <!-- 全屏容器 -->
   <div class="container-login">
@@ -72,11 +69,8 @@ export default {
             'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
             this.loginForm
           ).then(res=>{
-<<<<<<< HEAD
-=======
             // 响应报文对象（响应状态行，响应头，相应主体，res.data）
             auth.setUser(res.data.data)
->>>>>>> home
             this.$router.push('/')
           }).catch(()=>{
             // 提示：错误信息
