@@ -12,7 +12,16 @@
         </el-breadcrumb>
       </div>
       <el-form label-width="80px">
-        <el-form-item label="状态"></el-form-item>
+        <el-form-item label="状态">
+          <el-radio-group v-model="filterData.status">
+            <el-radio :label="null">全部</el-radio>
+            <el-radio :label="0">草稿</el-radio>
+            <el-radio :label="1">待审核</el-radio>
+            <el-radio :label="2">审核通过</el-radio>
+            <el-radio :label="3">审核失败</el-radio>
+            <el-radio :label="4">已删除</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="频道"></el-form-item>
         <el-form-item label="日期"></el-form-item>
         <el-form-item></el-form-item>
@@ -24,6 +33,13 @@
 <script>
 export default {
   name: "app-article",
+  data(){
+    return{
+      filterData:{
+        status:null
+      }
+    }
+  }
   // created() {
   //   this.$http
   //     .get("articles")
