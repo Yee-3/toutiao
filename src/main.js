@@ -9,11 +9,12 @@ import router from '@/router'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import plugin from '@/plugin'
 // 导入axios
 import axios from '@/api'
 // 使用element-ui
 Vue.use(ElementUI)
-
+Vue.use(plugin)
 // 挂载$http 对象axios
 Vue.prototype.$http = axios
 

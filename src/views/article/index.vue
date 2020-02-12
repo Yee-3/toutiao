@@ -4,12 +4,8 @@
     <el-card>
       <!-- 面包屑 -->
       <div slot="header">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <!-- :to="{ path: '/' }" 和 router-link to 属性一致  -->
-          <!-- { path: '/' } 使用对象和  to="/"  作用一致 -->
-          <el-breadcrumb-item :to="{path:'/'}">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        </el-breadcrumb>
+        <!-- <my-bread>素材管理</my-bread> -->
+        <my-bread>内容管理</my-bread>
       </div>
       <el-form label-width="80px" size="small">
         <el-form-item label="状态">
@@ -51,7 +47,9 @@
 </template>
 
 <script>
+import MyBread from "@/components/my-bread";
 export default {
+  components: { MyBread },
   name: "app-article",
   data() {
     return {
