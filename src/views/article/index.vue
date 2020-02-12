@@ -48,9 +48,9 @@
       <div slot="header">根据筛选条件共查询到 0 条结果：</div>
       <el-table :data="articles">
         <el-table-column label="封面"></el-table-column>
-        <el-table-column label="标题"></el-table-column>
+        <el-table-column label="标题" prop="title"></el-table-column>
         <el-table-column label="状态"></el-table-column>
-        <el-table-column label="发布时间"></el-table-column>
+        <el-table-column label="发布时间" prop="pubdata"></el-table-column>
         <el-table-column label="操作"></el-table-column>
       </el-table>
       <!-- 分页 -->
@@ -73,7 +73,9 @@ export default {
         status: null,
         channel_id: null,
         begin_pubdate: null,
-        end_pubdate: null
+        end_pubdate: null,
+        page: 1,
+        per_page: 20
       },
       channelOptions: [
         // { label: "前端", value: 1 },
@@ -87,13 +89,20 @@ export default {
   // 获取筛选信息的请求
   created() {
     this.getChannelOptions();
+    this.getArticles();
   },
   methods: {
     // 获取频道数据
     async getChannelOptions() {
       // 发请求获取频道数据
-      const res=await this.$http.get('channels')
-      this.channelOptions=res.data.data.channels
+      const res = await this.$http.get("channels");
+      this.channelOptions = res.data.data.channels;
+    },
+    async getArticles() {
+      // post('地址','请求体数据')
+      // 如果是get请求，如何传递参数对象 get('地址',{params:'get对象参数'})
+      const res = await this.$http.get("articles", { params: this.filterData });
+       this.articles = res.data.data.results
     }
   }
   // created() {
