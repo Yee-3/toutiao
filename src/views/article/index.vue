@@ -79,7 +79,13 @@
               icon="el-icon-edit"
               circle
             ></el-button>
-            <el-button plain type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button
+              @click="delEditArticle(scope.row.id)"
+              plain
+              type="danger"
+              icon="el-icon-delete"
+              circle
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,6 +137,25 @@ export default {
     this.getArticles();
   },
   methods: {
+    // 删除文章
+    delEditArticle() {
+      this.confirm("您是否要删除该文章？", "温馨提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // 删除请求
+          try {
+            await this.$http.delete(`/articles?id=${id}`);
+            this.$message.success("删除成功");
+            this.getArticles();
+          } catch (e) {
+            this.$message.error("删除失败");
+          }
+        }).catch(() => {});
+    },
+    // 编辑文章
     toEditArticle(id) {
       this.$router.push(`/publish?id=${id}`);
     },
@@ -175,7 +200,6 @@ export default {
       const res = await this.$http.get("articles", { params: this.filterData });
       this.articles = res.data.data.results;
       console.log(this.articles);
-      
       this.total = res.data.data.total_count;
     }
   }
