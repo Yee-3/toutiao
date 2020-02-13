@@ -80,7 +80,7 @@
               circle
             ></el-button>
             <el-button
-              @click="delEditArticle(scope.row.id)"
+              @click="delArticle(scope.row.id)"
               plain
               type="danger"
               icon="el-icon-delete"
@@ -138,8 +138,8 @@ export default {
   },
   methods: {
     // 删除文章
-    delEditArticle() {
-      this.confirm("您是否要删除该文章？", "温馨提示", {
+    delArticle(id) {
+      this.$confirm("您是否要删除该文章？", "温馨提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -147,7 +147,7 @@ export default {
         .then(async () => {
           // 删除请求
           try {
-            await this.$http.delete(`/articles?id=${id}`);
+            await this.$http.delete(`articles/${id}`);
             this.$message.success("删除成功");
             this.getArticles();
           } catch (e) {
