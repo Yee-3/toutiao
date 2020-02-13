@@ -2,9 +2,18 @@
 import axios from 'axios'
 import auth from '@/utils/auth'
 import router from '@/router'
+import JSONBINGINT from 'json-bigint'
 // 配置axios
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // axios.defaults.headers.Authorization=`Bearer ${auth.getUser().token}`
+// 转换响应格式
+axios.defaults.transformResponse = [data => {
+  try {
+    return JSONBINGINT.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 axios.interceptors.request.use(config => {
   const user = auth.getUser()
   if (user.token) config.headers.Authorization = `Bearer ${user.token}`
