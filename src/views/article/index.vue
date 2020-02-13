@@ -45,7 +45,7 @@
     </el-card>
     <!-- 结果区域 -->
     <el-card style="margin-top:20px">
-      <div slot="header">根据筛选条件共查询到 0 条结果：</div>
+      <div slot="header">根据筛选条件共查询到 {{total}} 条结果：</div>
       <el-table :data="articles">
         <el-table-column label="封面">
           <!-- cover:{type:'',images:[]} 取第一张图片进行预览-->
@@ -76,7 +76,15 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-      <el-pagination style="margin-top:20px" background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        style="margin-top:20px"
+        background
+        layout="prev, pager, next"
+        @current-change="pager"
+        :current-page="filterData.page"
+        :total="total"
+        :page-size="filterData.per_page"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -89,6 +97,7 @@ export default {
   data() {
     return {
       articles: [],
+      total: 0,
       // 声明筛选条件数据，筛选条件数据提交给后台，数据的字段名称，由后台接口决定。
       // 筛选数据是由多个表单元素组成，需要收集所有数据，应该使用对象来进行绑定
       filterData: {
@@ -114,6 +123,11 @@ export default {
     this.getArticles();
   },
   methods: {
+    // 分页
+    pager(newPage) {
+      this.filterData.page = newPage;
+      this.getArticles()
+    },
     // 获取频道数据
     async getChannelOptions() {
       // 发请求获取频道数据
@@ -125,6 +139,7 @@ export default {
       // 如果是get请求，如何传递参数对象 get('地址',{params:'get对象参数'})
       const res = await this.$http.get("articles", { params: this.filterData });
       this.articles = res.data.data.results;
+      this.total = res.data.data.total_count;
     }
   }
   // created() {
