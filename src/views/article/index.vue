@@ -19,15 +19,18 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道">
-          <el-select @change="changeChannel" v-model="filterData.channel_id" placeholder="请选择">
+          <!-- <el-select @change="changeChannel" v-model="filterData.channel_id" placeholder="请选择">
             <el-option
               v-for="item in channelOptions"
               :key="item.id"
               :label="item.name"
               :value="item.id"
             ></el-option>
-            <!-- label 选项文字  value 选项的值 当你选择某个选项后，该选项的值提供v-model -->
-          </el-select>
+          label 选项文字  value 选项的值 当你选择某个选项后，该选项的值提供v-model-->
+          <!-- </el-select> -->
+          <!-- 使用自己封装组件 -->
+          <my-channel v-model="filterData.channel_id"></my-channel>
+          <!-- <my-channel :value="filterData.channel_id" @input="filterData.channel_id=$event"></my-channel> -->
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
@@ -133,7 +136,7 @@ export default {
   },
   // 获取筛选信息的请求
   created() {
-    this.getChannelOptions();
+    // this.getChannelOptions();
     this.getArticles();
   },
   methods: {
@@ -153,17 +156,18 @@ export default {
           } catch (e) {
             this.$message.error("删除失败");
           }
-        }).catch(() => {});
+        })
+        .catch(() => {});
     },
     // 编辑文章
     toEditArticle(id) {
       this.$router.push(`/publish?id=${id}`);
     },
-    changeChannel() {
-      if (this.filterData.channel_id === "") {
-        this.filterData.channel_id = null;
-      }
-    },
+    // changeChannel() {
+    //   if (this.filterData.channel_id === "") {
+    //     this.filterData.channel_id = null;
+    //   }
+    // },
     // 筛选逻辑
     search() {
       this.filterData.page = 1;
@@ -189,11 +193,12 @@ export default {
       }
     },
     // 获取频道数据
-    async getChannelOptions() {
-      // 发请求获取频道数据
-      const res = await this.$http.get("channels");
-      this.channelOptions = res.data.data.channels;
-    },
+    // async getChannelOptions() {
+    //   // 发请求获取频道数据
+    //   const res = await this.$http.get("channels");
+    //   this.channelOptions = res.data.data.channels;
+    // },
+    // 获取文章数据
     async getArticles() {
       // post('地址','请求体数据')
       // 如果是get请求，如何传递参数对象 get('地址',{params:'get对象参数'})
