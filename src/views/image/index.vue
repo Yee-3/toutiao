@@ -79,7 +79,16 @@ export default {
   },
   methods: {
     // 上传成功
-    handleSuccess(){},
+    handleSuccess(res){
+      // 提示+预览
+      this.$message.success('上传成功')
+      this.imageUrl=res.data.url
+      // 关闭对话框，更新当前列表
+      window.setInterval(()=>{
+        this.dialogVisible=false
+        this.getImages()
+      },3000)
+    },
     // 打开对话框
     openDialog() {
       this.dialogVisible = true;
