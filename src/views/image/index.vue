@@ -92,6 +92,8 @@ export default {
     // 打开对话框
     openDialog() {
       this.dialogVisible = true;
+      // 清空预览图
+      this.imageUrl=null 
     },
     // 删除功能
     delImage(id) {
@@ -139,10 +141,11 @@ export default {
       this.reqParams.page = newPage;
       this.getImages();
     },
+    // 获取素材
     async getImages() {
-      const res = await this.$http.get("user/images", {
+      const res = await this.$http.get('user/images', {
         params: this.reqParams
-      });
+      })
       this.images = res.data.data.results;
       this.total = res.data.data.total_count;
     }
