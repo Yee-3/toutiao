@@ -38,7 +38,9 @@
         <!-- <span>上传组件</span> -->
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+          name="image"
+          :headers="uploadHeaders"
           :show-file-list="false"
           :on-success="handleSuccess"
         >
@@ -51,6 +53,7 @@
 </template>
 
 <script>
+import auth from '@/utils/auth'
 export default {
   name: "app-image",
   data() {
@@ -64,7 +67,11 @@ export default {
       },
       images: [],
       total: 0,
-      imageUrl:null
+      imageUrl:null,
+      // 上传请求头
+      uploadHeaders:{
+        Authorization:`Bearer ${auth.getUser().token}`
+      }
     };
   },
   created() {
