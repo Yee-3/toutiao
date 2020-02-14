@@ -9,6 +9,8 @@ import router from '@/router'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// 自己的样式，需写在element-UI下面才能覆盖样式
+import '@/styles/index.less'
 import plugin from '@/plugin'
 // 导入axios
 import axios from '@/api'

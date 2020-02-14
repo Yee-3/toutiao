@@ -35,7 +35,16 @@
       ></el-pagination>
       <!-- 对话框 -->
       <el-dialog title="添加素材" :visible.sync="dialogVisible" width="300px">
-        <span>上传组件</span>
+        <!-- <span>上传组件</span> -->
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleSuccess"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-dialog>
     </el-card>
   </div>
@@ -47,23 +56,26 @@ export default {
   data() {
     return {
       // 控住对话框显示隐藏
-      dialogVisible:false,
+      dialogVisible: false,
       reqParams: {
         collect: false,
         page: 1,
         per_page: 10
       },
       images: [],
-      total: 0
+      total: 0,
+      imageUrl:null
     };
   },
   created() {
     this.getImages();
   },
   methods: {
+    // 上传成功
+    handleSuccess(){},
     // 打开对话框
-    openDialog(){
-      this.dialogVisible=true
+    openDialog() {
+      this.dialogVisible = true;
     },
     // 删除功能
     delImage(id) {
@@ -125,6 +137,7 @@ export default {
 <style scoped lang='less'>
 .img-list {
   margin-bottom: 15px;
+  // text-align: center;
   .img-item {
     // margin: 0 auto;
     width: 180px;
