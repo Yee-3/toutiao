@@ -12,10 +12,10 @@
         <el-button style="float:right" type="success" size="small">添加素材</el-button>
       </div>
       <div class="img-list">
-        <div class="img-item" v-for="i in 10" :key="i">
+        <div class="img-item" v-for="item in images" :key="item.id">
           <img src="../../assets/avatar.jpg" alt />
           <div class="option">
-            <span class="el-icon-star-off"></span>
+            <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
             <span class="el-icon-delete"></span>
           </div>
         </div>
@@ -35,8 +35,20 @@ export default {
         collect: false,
         page: 1,
         per_page: 10
-      }
+      },
+      images: []
     };
+  },
+  created() {
+    this.getImages();
+  },
+  methods: {
+    async getImages() {
+      const res = await this.$http.get("user/images", {
+        params: this.reqParams
+      });
+      this.images = res.data.data.results;
+    }
   }
 };
 </script>
