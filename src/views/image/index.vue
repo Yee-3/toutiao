@@ -15,7 +15,11 @@
         <div class="img-item" v-for="item in images" :key="item.id">
           <img src="../../assets/avatar.jpg" alt />
           <div class="option" v-if="!reqParams.collect">
-            <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+            <span
+              @click="toggleStatus(item)"
+              class="el-icon-star-off"
+              :class="{red:item.is_collected}"
+            ></span>
             <span class="el-icon-delete"></span>
           </div>
         </div>
@@ -51,10 +55,26 @@ export default {
     this.getImages();
   },
   methods: {
+    // 添加收藏和取消收藏切换
+    async toggleStatus(item) {
+      try {
+        const res = await this.$http.put(`/user/images/${item.id}`, {
+          collect: !item.is_collected
+        });
+        this.$message.success(
+          // res.data.data.collect 就是当前素材状态
+          res.data.data.collect ? "添加收藏成功" : "取消收藏成功"
+        );
+        // item 就是素材数据  is_collected 显示收藏图标的 颜色
+        item.is_collected = res.data.data.collect;
+      } catch (e) {
+        this.$message.console.error("操作失败");
+      }
+    },
     // 切换全部与收藏
-    changeCollect(){
-      this.reqParams.page=1
-      this.getImages()
+    changeCollect() {
+      this.reqParams.page = 1;
+      this.getImages();
     },
     // 切换分页
     pager(newPage) {
