@@ -9,7 +9,7 @@
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
         </el-radio-group>
-        <el-button style="float:right" type="success" size="small">添加素材</el-button>
+        <el-button @click="openDialog()" style="float:right" type="success" size="small">添加素材</el-button>
       </div>
       <div class="img-list">
         <div class="img-item" v-for="item in images" :key="item.id">
@@ -33,6 +33,10 @@
         :current-page="reqParams.page"
         @current-change="pager"
       ></el-pagination>
+      <!-- 对话框 -->
+      <el-dialog title="添加素材" :visible.sync="dialogVisible" width="300px">
+        <span>上传组件</span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -42,6 +46,8 @@ export default {
   name: "app-image",
   data() {
     return {
+      // 控住对话框显示隐藏
+      dialogVisible:false,
       reqParams: {
         collect: false,
         page: 1,
@@ -55,23 +61,29 @@ export default {
     this.getImages();
   },
   methods: {
+    // 打开对话框
+    openDialog(){
+      this.dialogVisible=true
+    },
     // 删除功能
-    delImage(id){
- // 确认框
-      this.$confirm('您确定要删除该图片素材?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(async () => {
-        // 删除请求
-        try {
-          await this.$http.delete(`/user/images/${id}`)
-          this.$message.success('删除成功')
-          this.getImages()
-        } catch (e) {
-          this.$message.error('删除失败')
-        }
-      }).catch(() => {})
+    delImage(id) {
+      // 确认框
+      this.$confirm("您确定要删除该图片素材?", "温馨提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // 删除请求
+          try {
+            await this.$http.delete(`/user/images/${id}`);
+            this.$message.success("删除成功");
+            this.getImages();
+          } catch (e) {
+            this.$message.error("删除失败");
+          }
+        })
+        .catch(() => {});
     },
     // 添加收藏和取消收藏切换
     async toggleStatus(item) {
@@ -114,7 +126,7 @@ export default {
 .img-list {
   margin-bottom: 15px;
   .img-item {
-    margin: 0 auto;
+    // margin: 0 auto;
     width: 180px;
     height: 180px;
     border: 1px dashed #ddd;
