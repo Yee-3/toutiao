@@ -9,7 +9,7 @@
           <el-input v-model="articleForm.title" style="width:400px"></el-input>
         </el-form-item>
         <el-form-item label="内容：">
-          <quill-editor v-model="articleForm.content"></quill-editor>
+          <quill-editor v-model="articleForm.content" :options="editorOption"></quill-editor>
         </el-form-item>
         <el-form-item label="封面：">封面组件</el-form-item>
         <el-form-item label="频道：">
@@ -26,21 +26,36 @@
 
 <script>
 // 富文本需要的样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 // 组件配置对象
-import { quillEditor } from 'vue-quill-editor'
+import { quillEditor } from "vue-quill-editor";
 export default {
   name: "app-publish",
-  components:{quillEditor},
+  components: { quillEditor },
   data() {
     return {
-      count:10,
+      // count: 10,
       articleForm: {
         title: null,
         channel_id: null,
-        content:null
+        content: null
+      },
+     editorOption: {
+        // 站位文字
+        placeholder: '',
+        // 模板配置
+        modules:{
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code'],
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            ['image']
+          ]
+        }
       }
     };
   }
