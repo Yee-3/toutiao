@@ -53,7 +53,6 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-tab-pane>
-        </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
