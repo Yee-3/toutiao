@@ -102,14 +102,16 @@ export default {
       // 如何判断此时选中的是 素材库 还是 上传图片
       if (this.activeName === "list") {
         // 素材库 校验是否选中图片
-        if (!this.selectedImageUrl) return this.$message.warning("请选中一张素材照片");
+        if (!this.selectedImageUrl)
+          return this.$message.warning("请选中一张素材照片");
         // 把选中的图片放到图片按钮的位置
         // this.imageBtnUrl = this.selectedImageUrl;
         // 提交父组件
         this.$emit("input", this.selectedImageUrl);
       } else {
         // 上传图片 校验是否上传图片
-        if (!this.uploadImageUrl) return this.$message.warning("请上传一张素材照片");
+        if (!this.uploadImageUrl)
+          return this.$message.warning("请上传一张素材照片");
         // this.imageBtnUrl = this.uploadImageUrl;
         this.$emit("input", this.uploadImageUrl);
       }
