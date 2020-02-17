@@ -2,7 +2,7 @@
   <div class="my-image">
     <!-- 图片按钮 -->
     <div class="img_btn" @click="openDialog()">
-      <img src="../assets/default.png" alt />
+      <img :src="imageBtnUrl" alt />
     </div>
     <!-- 对话框 -->
     <el-dialog :visible.sync="dialogVisible" width="750px">
@@ -56,16 +56,16 @@
       </el-tabs>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="confirmImage()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import auth from '@/utils/auth'
+import auth from '@/utils/auth';
 export default {
-  name: "my-image",
+  name: 'my-image',
   data() {
     return {
       reqParams: {
@@ -81,34 +81,58 @@ export default {
       loading: false,
       dialogVisible: false,
       // 激活tab的名称
-      activeName: "list",
-      selectedImageUrl:null,
+      activeName: 'list',
+      selectedImageUrl: null,
       // 上传请求头
-      uploadHeaders:{
+      uploadHeaders: {
         Authorization: `Bearer ${auth.getUser().token}`
       },
       // 上传的图片
-      uploadImageUrl:null
-
+      uploadImageUrl: null,
+      // 图片按钮 图片地址
+      imageBtnUrl: '../assets/default.png'
     };
   },
   methods: {
+    // 确认图片
+    confirmImage() {
+      // 如何判断此时选中的是 素材库 还是 上传图片
+      if (!this.activeName === 'list') {
+        // 素材库 校验是否选中图片
+        if (!this.selectedImageUrl)
+          return this.$message.warning("请选中一张素材照片");
+        // 把选中的图片放到图片按钮的位置
+        this.imageBtnUrl = this.selectedImageUrl;
+      } else {
+        // 上传图片 校验是否上传图片
+        if (!this.uploadImageUrl)
+          return this.$message.warning("请上传一张素材照片");
+        this.imageBtnUrl = this.uploadImageUrl;
+      }
+      // 关闭对话框
+      this.dialogVisible = false;
+    },
     // 上传成功
-    handleSuccess(res){
+    handleSuccess(res) {
       // 上传成功
-    this.$message.success('上传成功')
-    // 预览
-    this.uploadImageUrl=res.data.url
+      this.$message.success("上传成功");
+      // 预览
+      this.uploadImageUrl = res.data.url;
     },
     // 选中图片
-    selectedImage(url){
-      this.selectedImageUrl=url
+    selectedImage(url) {
+      this.selectedImageUrl = url;
     },
     openDialog() {
       this.dialogVisible = true;
       // 打开对话框获取素材列表数据
       // 原因：数据会有变化，用户不用封面
       this.getImages();
+      // 重置数据
+      // 默认激活第一个选项卡
+      this.activeName = 'list';
+      this.selectedImageUrl = null;
+      this.uploadImageUrl = null;
     },
     // 切换全部与收藏
     changeCollect() {
@@ -125,7 +149,7 @@ export default {
       // 开始加载
       this.loading = true;
       // 请求获取数据
-      const res = await this.$http.get("user/images", {
+      const res = await this.$http.get('user/images', {
         params: this.reqParams
       });
       // 加载完成
