@@ -23,7 +23,6 @@
           <!-- 分页 -->
           <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
         </el-tab-pane>
-        </el-tab-pane>
         <el-tab-pane label="上传图片" name="upload">2</el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
@@ -39,13 +38,13 @@ export default {
   name: "my-image",
   data() {
     return {
-      reqParams:{
-        collect:false,
-        page:1,
-        per_page:8
+      reqParams: {
+        collect: false,
+        page: 1,
+        per_page: 8
       },
       dialogVisible: false,
-      activeName:'list'
+      activeName: "list"
     };
   },
   methods: {
