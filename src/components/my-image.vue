@@ -2,7 +2,7 @@
   <div class="my-image">
     <!-- 图片按钮 -->
     <div class="img_btn" @click="openDialog()">
-      <img :src="imageBtnUrl" alt />
+      <img :src="value||imageBtnUrl" alt />
     </div>
     <!-- 对话框 -->
     <el-dialog :visible.sync="dialogVisible" width="750px">
@@ -15,29 +15,29 @@
               <el-radio-button :label="false">全部</el-radio-button>
               <el-radio-button :label="true">收藏</el-radio-button>
             </el-radio-group>
-          </div>
-          <!-- 列表 -->
-          <div class="img-list">
-            <div
-              @click="selectedImage(item.url)"
-              :class="{selected:selectedImageUrl===item.url}"
-              class="img-item"
-              v-for="item in images"
-              :key="item.id"
-            >
-              <img :src="item.url" alt />
+            <!-- 列表 -->
+            <div class="img-list">
+              <div
+                @click="selectedImage(item.url)"
+                :class="{selected:selectedImageUrl===item.url}"
+                class="img-item"
+                v-for="item in images"
+                :key="item.id"
+              >
+                <img :src="item.url" alt />
+              </div>
             </div>
+            <!-- 分页 -->
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              hide-on-single-page
+              @current-change="pager"
+              :current-page="reqParams.page"
+              :page-size="reqParams.per_page"
+              :total="total"
+            ></el-pagination>
           </div>
-          <!-- 分页 -->
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            hide-on-single-page
-            @current-change="pager"
-            :current-page="reqParams.page"
-            :page-size="reqParams.per_page"
-            :total="total"
-          ></el-pagination>
         </el-tab-pane>
         <el-tab-pane label="上传图片" name="upload">
           <!-- 上传组件 -->
@@ -63,9 +63,12 @@
 </template>
 
 <script>
-import auth from '@/utils/auth';
+import auth from "@/utils/auth";
+//  主动导入，打包这张图片到服务器，defaultImage就是图片数据
+import defaultImage from "@/assets/default.png";
 export default {
-  name: 'my-image',
+  name: "my-image",
+  props: ["value"],
   data() {
     return {
       reqParams: {
@@ -81,7 +84,7 @@ export default {
       loading: false,
       dialogVisible: false,
       // 激活tab的名称
-      activeName: 'list',
+      activeName: "list",
       selectedImageUrl: null,
       // 上传请求头
       uploadHeaders: {
@@ -90,24 +93,27 @@ export default {
       // 上传的图片
       uploadImageUrl: null,
       // 图片按钮 图片地址
-      imageBtnUrl: '../assets/default.png'
+      imageBtnUrl: "defaultImage"
     };
   },
   methods: {
     // 确认图片
     confirmImage() {
       // 如何判断此时选中的是 素材库 还是 上传图片
-      if (!this.activeName === 'list') {
+      if (!this.activeName === "list") {
         // 素材库 校验是否选中图片
         if (!this.selectedImageUrl)
           return this.$message.warning("请选中一张素材照片");
         // 把选中的图片放到图片按钮的位置
-        this.imageBtnUrl = this.selectedImageUrl;
+        // this.imageBtnUrl = this.selectedImageUrl;
+        // 提交父组件
+        this.$emit("input", this.selectedImageUrl);
       } else {
         // 上传图片 校验是否上传图片
         if (!this.uploadImageUrl)
           return this.$message.warning("请上传一张素材照片");
-        this.imageBtnUrl = this.uploadImageUrl;
+        // this.imageBtnUrl = this.uploadImageUrl;
+        this.$emit("input", this.uploadImageUrl);
       }
       // 关闭对话框
       this.dialogVisible = false;
@@ -130,7 +136,7 @@ export default {
       this.getImages();
       // 重置数据
       // 默认激活第一个选项卡
-      this.activeName = 'list';
+      this.activeName = "list";
       this.selectedImageUrl = null;
       this.uploadImageUrl = null;
     },
@@ -149,7 +155,7 @@ export default {
       // 开始加载
       this.loading = true;
       // 请求获取数据
-      const res = await this.$http.get('user/images', {
+      const res = await this.$http.get("user/images", {
         params: this.reqParams
       });
       // 加载完成

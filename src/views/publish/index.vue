@@ -21,6 +21,7 @@
           <div>
             <!-- 组件位置 -->
             <my-image></my-image>
+            <my-image v-model="articleForm.cover.images[0]"></my-image>
             <my-image></my-image>
             <my-image></my-image>
           </div>
@@ -67,12 +68,12 @@ export default {
         // 模板配置
         modules: {
           toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code"],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            ["image"]
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code'],
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            ['image']
           ]
         }
       }
