@@ -18,7 +18,13 @@
           </div>
           <!-- 列表 -->
           <div class="img-list">
-            <div class="img-item" v-for="item in images" :key="item.id">
+            <div
+              @click="selectedImage(item.url)"
+              :class="{selected:selectedImageUrl===item.url}"
+              class="img-item"
+              v-for="item in images"
+              :key="item.id"
+            >
               <img :src="item.url" alt />
             </div>
           </div>
@@ -60,10 +66,17 @@ export default {
       // 加载中
       loading: false,
       dialogVisible: false,
-      activeName: "list"
+      // 激活tab的名称
+      activeName: "list",
+      selectedImageUrl:null
+
     };
   },
   methods: {
+    // 选中图片
+    selectedImage(url){
+      this.selectedImageUrl=url
+    },
     openDialog() {
       this.dialogVisible = true;
       // 打开对话框获取素材列表数据
