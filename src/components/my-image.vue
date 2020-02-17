@@ -39,7 +39,21 @@
             :total="total"
           ></el-pagination>
         </el-tab-pane>
-        <el-tab-pane label="上传图片" name="upload">2</el-tab-pane>
+        <el-tab-pane label="上传图片" name="upload">
+          <!-- 上传组件 -->
+          <el-upload
+            class="avatar-uploader"
+            action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+            name="image"
+            :headers="uploadHeaders"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+          >
+            <img v-if="uploadImageUrl" :src="uploadImageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-tab-pane>
+        </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -50,6 +64,7 @@
 </template>
 
 <script>
+import auth from '@/utils/auth'
 export default {
   name: "my-image",
   data() {
@@ -68,11 +83,24 @@ export default {
       dialogVisible: false,
       // 激活tab的名称
       activeName: "list",
-      selectedImageUrl:null
+      selectedImageUrl:null,
+      // 上传请求头
+      uploadHeaders:{
+        Authorization: `Bearer ${auth.getUser().token}`
+      },
+      // 上传的图片
+      uploadImageUrl:null
 
     };
   },
   methods: {
+    // 上传成功
+    handleSuccess(res){
+      // 上传成功
+    this.$message.success('上传成功')
+    // 预览
+    this.uploadImageUrl=res.data.url
+    },
     // 选中图片
     selectedImage(url){
       this.selectedImageUrl=url
