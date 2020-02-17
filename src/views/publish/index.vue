@@ -47,7 +47,6 @@ import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
 export default {
   name: "app-publish",
-  props: ['value'],
   components: { quillEditor },
   data() {
     return {
