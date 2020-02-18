@@ -34,6 +34,6 @@ export default {
 };
 </script>
 
-<style lang="sless" scoped>
+<style lang="less" scoped>
 
 </style>
