@@ -19,7 +19,16 @@
             <el-radio :label="4">已删除</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="频道：">
+        <el-form-item label="频道">
+          <!-- <el-select @change="changeChannel" v-model="filterData.channel_id" placeholder="请选择">
+            <el-option
+              v-for="item in channelOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          label 选项文字  value 选项的值 当你选择某个选项后，该选项的值提供v-model-->
+          <!-- </el-select> -->
           <!-- 使用自己封装组件 -->
           <my-channel v-model="filterData.channel_id"></my-channel>
           <!-- <my-channel :value="filterData.channel_id" @input="filterData.channel_id=$event"></my-channel> -->
@@ -117,38 +126,38 @@ export default {
       dateArr: []
     }
   },
-  created () {
-    // this.getChannelOptions()
-    this.getArticles()
+  // 获取筛选信息的请求
+  created() {
+    // this.getChannelOptions();
+    this.getArticles();
   },
   methods: {
     // 删除文章
-    delArticle (id) {
-      // 确认框
-      this.$confirm('亲，您是否要删除该篇文章?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(async () => {
-        // 删除请求
-        try {
-          // 13911111111 账号是测试账号，无法删除数据。
-          await this.$http.delete(`articles/${id}`)
-          this.$message.success('删除成功')
-          this.getArticles()
-        } catch (e) {
-          this.$message.error('删除失败')
-        }
-      }).catch(() => {})
+    delEditArticle() {
+      this.confirm("您是否要删除该文章？", "温馨提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // 删除请求
+          try {
+            await this.$http.delete(`/articles?id=${id}`);
+            this.$message.success("删除成功");
+            this.getArticles();
+          } catch (e) {
+            this.$message.error("删除失败");
+          }
+        })
+        .catch(() => {});
     },
-    // 去编辑文章
-    toEditArticle (id) {
-      this.$router.push(`/publish?id=${id}`)
+    // 编辑文章
+    toEditArticle(id) {
+      this.$router.push(`/publish?id=${id}`);
     },
-    // 频道改变后
-    // changeChannel () {
-    //   if (this.filterData.channel_id === '') {
-    //     this.filterData.channel_id = null
+    // changeChannel() {
+    //   if (this.filterData.channel_id === "") {
+    //     this.filterData.channel_id = null;
     //   }
     // },
     // 筛选逻辑
@@ -171,22 +180,14 @@ export default {
         this.filterData.end_pubdate = null
       }
     },
-    // 分页切
-    pager (newPage) {
-      // 修改参数
-      this.filterData.page = newPage
-      this.getArticles()
-    },
-    // // 获取频道数据
-    // async getChannelOptions () {
+    // 获取频道数据
+    // async getChannelOptions() {
     //   // 发请求获取频道数据
-    //   const res = await this.$http.get('channels')
-    //   // res = {data:{message:'',data:{channels:[// 频道数组 ]}}}
-    //   // this.channelOptions = [{id,name}]  数据格式
-    //   this.channelOptions = res.data.data.channels
+    //   const res = await this.$http.get("channels");
+    //   this.channelOptions = res.data.data.channels;
     // },
     // 获取文章数据
-    async getArticles () {
+    async getArticles() {
       // post('地址','请求体数据')
       // 如果是get请求，如何传递参数对象 get('地址',{params:'get对象参数'})
       const res = await this.$http.get('articles', { params: this.filterData })

@@ -1,0 +1,39 @@
+<template>
+  <el-select @change="changeChannel" :value="value" placeholder="请选择" clearable>
+    <el-option v-for="item in channelOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+    <!-- label 选项文字  value 选项的值 当你选择某个选项后，该选项的值提供v-model -->
+  </el-select>
+</template>
+
+<script>
+export default {
+  name: 'my-channel',
+  props: ["value"],
+  data() {
+    return {
+      channelOptions: []
+    };
+  },
+  created() {
+    this.getChannelOptions();
+  },
+  methods: {
+    changeChannel(value) {
+      // 通知父组件改值  filterData.channel_id
+      if (value === "") value = null;
+      this.$emit("input", value);
+    },
+    // 获取频道数据
+    async getChannelOptions() {
+      const res = await this.$http.get("channels");
+      // res = {data:{message:'',data:{channels:[// 频道数组 ]}}}
+      // this.channelOptions = [{id,name}]  数据格式
+      this.channelOptions = res.data.data.channels;
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+
+</style>

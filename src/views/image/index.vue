@@ -13,7 +13,7 @@
       </div>
       <div class="img-list">
         <div class="img-item" v-for="item in images" :key="item.id">
-          <img src="../../assets/avatar.jpg" alt />
+          <img :src="item.url" alt />
           <div class="option" v-if="!reqParams.collect">
             <span
               @click="toggleStatus(item)"
