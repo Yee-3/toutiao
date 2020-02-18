@@ -9,6 +9,7 @@ import Article from '@/views/article'
 import Image from '@/views/image'
 import Publish from '@/views/publish'
 import Comment from '@/views/comment'
+import Fans from '@/views/fans'
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -20,7 +21,8 @@ const router = new VueRouter({
         { path: '/article', component: Article },
         { path: '/image', component: Image },
         { path: '/publish', component: Publish },
-        { path: '/comment', component: Comment }
+        { path: '/comment', component: Comment },
+        { path: '/fans', component: Fans },
 
       ]
     },
